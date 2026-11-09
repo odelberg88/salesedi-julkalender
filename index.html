@@ -14,8 +14,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--navy);overflow:hidden}
 body{font-family:"Familjen Grotesk",system-ui,"Segoe UI",sans-serif;color:var(--cream)}
-a.tile{position:relative;display:flex;flex-direction:column;gap:2.6vmin;width:100%;height:100%;padding:5vmin 6vmin;color:inherit;text-decoration:none;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(242,193,78,.6)}
-a.tile:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.tile{position:relative;display:flex;flex-direction:column;gap:2.6vmin;width:100%;height:100%;padding:5vmin 6vmin;color:inherit;text-decoration:none;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(242,193,78,.6)}
 .display{font-family:"Alfa Slab One",Rockwell,Georgia,serif;font-weight:400}
 .top{display:flex;align-items:center;justify-content:space-between}
 .logo-s{width:36%;height:auto}
@@ -41,7 +40,7 @@ a.tile:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
 </style>
 </head>
 <body>
-<a class="tile" id="tile" target="_blank" rel="noopener" aria-label="Öppna julkalendern"></a>
+<div class="tile" id="tile" role="img" aria-label="Julkalendern"></div>
 <script>
 (function(){
 "use strict";
@@ -103,11 +102,10 @@ function toDate(s){ var p = s.split('-').map(Number); return new Date(p[0], p[1]
 function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 function longDate(s){ var d = toDate(s); return WD[d.getDay()] + ' ' + d.getDate() + ' december'; }
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-var FOOT = '<span class="foot">Öppna kalendern<span aria-hidden="true">↗</span></span>';
+var FOOT = '';
 function opened(n){ return state && state.opened && state.opened[n]; }
 function render(){
   var t = today(), html, tile = document.getElementById('tile');
-  tile.href = CAL;
   if (t < FIRST){
     var days = Math.round((toDate(FIRST) - toDate(t)) / 864e5);
     html = '<img class="logo-l" src="' + LOGO + '" alt="Historien om julen som nästan buggade ur">' +
